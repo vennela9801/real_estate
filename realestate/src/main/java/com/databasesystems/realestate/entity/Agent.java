@@ -2,6 +2,8 @@ package com.databasesystems.realestate.entity;
 
 
 
+import java.io.Serializable;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -13,7 +15,12 @@ import lombok.Data;
 @Entity
 @Table(name="agent")
 @Data
-public class Agent {
+public class Agent implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1908015663832035719L;
 
 	@Id 
 	@Column(name="AgentID")

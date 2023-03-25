@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.databasesystems.realestate.entity.Agent;
+import com.databasesystems.realestate.models.request.SearchRequest;
 import com.databasesystems.realestate.models.response.ResponseStatus;
 import com.databasesystems.realestate.service.CommnOperationsService;
 
@@ -31,6 +32,19 @@ public class BaseOperationsController {
 				return new ResponseEntity<>(new ResponseStatus("Success",200,newAgent.getId()),HttpStatus.OK);
 			}
 			throw new Exception("Error occured while creating agent");
+		}catch(Exception e) {
+			return new ResponseEntity<>(new ResponseStatus("Failure",500,0),HttpStatus.OK);
+		}
+	}
+	
+	@PostMapping(value = "/realEstate/searchRequest", consumes = MediaType.APPLICATION_JSON_VALUE, 
+	        produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ResponseStatus> search(@RequestBody SearchRequest request) {
+		 
+		try {
+			Object obj = commOpsServ.searchInquiry(request);
+			return new ResponseEntity<>(new ResponseStatus("Success",200,0,obj),HttpStatus.OK);
+			
 		}catch(Exception e) {
 			return new ResponseEntity<>(new ResponseStatus("Failure",500,0),HttpStatus.OK);
 		}
