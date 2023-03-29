@@ -1,13 +1,36 @@
-CREATE TABLE `databaseProject1`.`address` (
-  `AddressID` int NOT NULL AUTO_INCREMENT,
+CREATE TABLE `databaseProject1`.`home` (
+  `HomeID` int NOT NULL AUTO_INCREMENT,
+  `owner` varchar(225) DEFAULT NULL,
+  `rate` varchar(45) DEFAULT NULL,
+  `Floorspace` varchar(25) DEFAULT NULL,
+  `Floors` int DEFAULT NULL,
+  `Bathrooms` varchar(25) DEFAULT NULL,
+  `Bedrooms` int DEFAULT NULL,
+  `Landsize` varchar(45) DEFAULT NULL,
+  `Yearconstructed` int DEFAULT NULL,
+  `Hometype` varchar(50) DEFAULT NULL,
+  `description` text,
+  `Address_id` int not null,
+  `AgentID` int not null,
+  `availabilitystatus` varchar(45) DEFAULT 'Available',
+  PRIMARY KEY (`HomeID`),
+  UNIQUE KEY `HomeID_UNIQUE` (`HomeID`),
+  KEY `AddressID_idx` (`Address_id`),
+  CONSTRAINT `Address_id` FOREIGN KEY (`Address_id`) REFERENCES `address` (`Address_id`),
+  CONSTRAINT `AgentID` FOREIGN KEY (`AgentID`) REFERENCES `Agent` (`AgentID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `address` (
+  `Address_id` int NOT NULL AUTO_INCREMENT,
   `address` varchar(255) NOT NULL,
   `zip` int NOT NULL,
-  `county` varchar(45) DEFAULT null,
+  `county` varchar(45) DEFAULT NULL,
   `city` varchar(45) DEFAULT NULL,
   `State` varchar(45) DEFAULT 'MI',
-  PRIMARY KEY (`AddressID`),
+  PRIMARY KEY (`Address_id`),
   KEY `address_idx` (`address`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 
 
 Select home.HomeID, ho.OwnerFName, ho.OwnerLName,home.FloorSpace, home.Floors, home.Bathrooms, home.LandSize, home.YearConstructed, home.HomeType,
@@ -16,29 +39,6 @@ From home, address , homeowners ho
 Where home.AddressID = address.AddressID and  
 ho.OwnerName = 'Asem Jhon' and 
 city.CityName = 'Sterling Heights');
-
-
-CREATE TABLE `databaseProject1`.`home` (
-  `HomeID` int NOT NULL AUTO_INCREMENT,
-  `owner` varchar(225) DEFAULT NULL,
-  `rate` varchar(45) DEFAULT NULL,
-  `FloorSpace` varchar(25) DEFAULT NULL,
-  `Floors` int DEFAULT NULL,
-  `Bathrooms` varchar(25) DEFAULT NULL,
-  `Bedrooms` int DEFAULT NULL,
-  `LandSize` varchar(45) DEFAULT NULL,
-  `YearConstructed` int DEFAULT NULL,
-  `HomeType` varchar(50) DEFAULT NULL,
-  `description` text,
-  `AddressID` int not null,
-  `AgentID` int not null,
-  `availabilityStatus` varchar(45) DEFAULT 'Available',
-  PRIMARY KEY (`HomeID`),
-  UNIQUE KEY `HomeID_UNIQUE` (`HomeID`),
-  KEY `AddressID_idx` (`AddressID`),
-  CONSTRAINT `AddressID` FOREIGN KEY (`AddressID`) REFERENCES `address` (`AddressID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `AgentID` FOREIGN KEY (`AgentID`) REFERENCES `Agent` (`AgentID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
 CREATE TABLE `databaseProject1`.`hometype` (
