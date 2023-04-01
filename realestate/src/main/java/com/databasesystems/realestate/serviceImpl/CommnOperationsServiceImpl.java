@@ -65,6 +65,25 @@ public class CommnOperationsServiceImpl implements CommnOperationsService{
 			List<SearchInquiryResponse> resp = template.query(queryStr,params.toArray(),new BeanPropertyRowMapper<SearchInquiryResponse>(SearchInquiryResponse.class));
 			return resp;
 		}
+		if(!StringUtils.isEmpty(request.getCity()) && !StringUtils.isEmpty(request.getBedRoomCount()) && !StringUtils.isEmpty(request.getTotalbaths()) && !StringUtils.isEmpty(request.getFloors())) {
+			String queryStr = "Select home.HomeID as houseId, home.owner as houseOwner,home.FloorSpace as floorSpace, home.Floors as floors, home.Bedrooms as bedrooms, home.Bathrooms as bathrooms, home.LandSize as landSize,\r\n"
+					+ " home.YearConstructed, home.HomeType as houseType,\r\n"
+					+ "  address.address as address, address.city as city, address.county as county, address.zip as zipCode,address.state, home.rate as price \r\n"
+					+ "From home, address \r\n"
+					+ "Where home.Address_id = address.Address_id and  \r\n"
+					+ "home.Bedrooms = ? and \r\n"
+					+ "home.Bathrooms = ? and \r\n"
+					+ "home.Floors = ? and \r\n"
+					+ "address.city = ?;";
+			List<String> params = new ArrayList<>();
+			params.add(String.valueOf(request.getBedRoomCount()));
+			params.add(String.valueOf(request.getTotalbaths()));
+			params.add(String.valueOf(request.getFloors()));
+			params.add(request.getCity());
+			List<SearchInquiryResponse> resp = template.query(queryStr,params.toArray(),new BeanPropertyRowMapper<SearchInquiryResponse>(SearchInquiryResponse.class));
+			return resp;
+		}
+
 		}catch(Exception e) {
 			e.printStackTrace();
 			throw new Exception(e.getLocalizedMessage());
@@ -86,7 +105,5 @@ public class CommnOperationsServiceImpl implements CommnOperationsService{
 			throw new Exception("error occured while creating new Agent");
 		}
 	}
-
-	
 	
 }
