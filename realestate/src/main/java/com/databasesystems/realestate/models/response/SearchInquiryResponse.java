@@ -18,6 +18,7 @@ public class SearchInquiryResponse {
 	private String zipCode;
 	private String county;
 	private String floors;
+	private String bedrooms;
 	private String bathrooms;
 	private String landSize;
 	private String yearConstructed;

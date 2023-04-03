@@ -1,12 +1,12 @@
 CREATE TABLE `databaseProject1`.`home` (
   `HomeID` int NOT NULL AUTO_INCREMENT,
   `owner` varchar(225) DEFAULT NULL,
-  `rate` varchar(45) DEFAULT NULL,
-  `Floorspace` varchar(25) DEFAULT NULL,
+  `rate` int DEFAULT NULL,
+  `Floorspace`int DEFAULT NULL,
   `Floors` int DEFAULT NULL,
-  `Bathrooms` varchar(25) DEFAULT NULL,
+  `Bathrooms` int DEFAULT NULL,
   `Bedrooms` int DEFAULT NULL,
-  `Landsize` varchar(45) DEFAULT NULL,
+  `Landsize` int DEFAULT NULL,
   `Yearconstructed` int DEFAULT NULL,
   `Hometype` varchar(50) DEFAULT NULL,
   `description` text,
@@ -17,7 +17,7 @@ CREATE TABLE `databaseProject1`.`home` (
   UNIQUE KEY `HomeID_UNIQUE` (`HomeID`),
   KEY `AddressID_idx` (`Address_id`),
   CONSTRAINT `Address_id` FOREIGN KEY (`Address_id`) REFERENCES `address` (`Address_id`),
-  CONSTRAINT `AgentID` FOREIGN KEY (`AgentID`) REFERENCES `Agent` (`AgentID`)
+  CONSTRAINT `AgentID` FOREIGN KEY (`AgentID`) REFERENCES `agent` (`AgentID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 CREATE TABLE `address` (
@@ -33,12 +33,12 @@ CREATE TABLE `address` (
 
 
 
-Select home.HomeID, ho.OwnerFName, ho.OwnerLName,home.FloorSpace, home.Floors, home.Bathrooms, home.LandSize, home.YearConstructed, home.HomeType,
- address.AddressID, address.address, address.city, address.county, address.zip, home.rate
-From home, address , homeowners ho
-Where home.AddressID = address.AddressID and  
+Select home.HomeID, ho.OwnerName,home.FloorSpace, home.Floors, home.Bathrooms, home.LandSize, home.YearConstructed, home.HomeType,
+ address.Address_id, address.address, address.city, address.county, address.zip, home.rate
+From databaseProject1.home, databaseProject1.address , databaseProject1.homeowners ho
+Where home.Address_id = address.Address_id and  
 ho.OwnerName = 'Asem Jhon' and 
-city.CityName = 'Sterling Heights');
+address.city = 'Sterling Heights';
 
 
 CREATE TABLE `databaseProject1`.`hometype` (
