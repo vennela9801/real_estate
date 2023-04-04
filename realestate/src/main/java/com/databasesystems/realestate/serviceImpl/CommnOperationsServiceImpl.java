@@ -135,6 +135,20 @@ public class CommnOperationsServiceImpl implements CommnOperationsService {
 			} // people who own apartments and mansions
 			else if ("CONDITION6".equalsIgnoreCase(request.getCondition1())) {
 				// TO DO
+				String queryStr = "select distinct ho.ownerID ,ho.OwnerFName as ownerFirstName, ho.OwnerLName as ownerLastName, home.homeType as houseType, home.homeID, home.YearConstructed as yearConstructed,"
+						+ "ad.address as address, ad.city as city, li.status, li.price, \r\n"
+						+ "ad.county as county, ad.zip as zipCode,ad.state  FROM homeowners ho\r\n"
+						+ "inner JOIN Listing li ON li.ownerID = ho.ownerID JOIN Home home ON home.HomeID = li.HomeID \r\n"
+						+ "inner join address ad on ad.address_id = home.address_id\r\n"
+						+ " inner join\r\n"
+						+ " (select  group_concat(HomeType) as homeTypes,owner from(select * from  home where home.HomeType in ('Apartments', 'Mansion') order by hometype)t2 \r\n"
+						+ " group by owner)t1 on t1.owner = home.owner \r\n"
+						+ " and t1.homeTypes like '%Apartments%' and t1.homeTypes like '%Mansion%'  and "
+						+ " home.hometype in ('Apartments', 'Mansion') and UPPER(li.status) = 'AVAILABLE';";
+				
+				List<SearchInquiryResponse> resp = template.query(queryStr,
+						new BeanPropertyRowMapper<SearchInquiryResponse>(SearchInquiryResponse.class));
+				return resp;
 			} // ppl with most expensive homes in a city
 			else if ("CONDITION7".equalsIgnoreCase(request.getCondition1())
 					&& !StringUtils.isEmpty(request.getCity())) {
