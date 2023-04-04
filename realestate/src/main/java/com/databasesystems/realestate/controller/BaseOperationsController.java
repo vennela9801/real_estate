@@ -10,11 +10,13 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.databasesystems.realestate.entity.Agent;
 import com.databasesystems.realestate.entity.HomeEntity;
+import com.databasesystems.realestate.entity.HomeOwnerEntity;
 import com.databasesystems.realestate.models.request.SearchRequest;
 import com.databasesystems.realestate.models.response.ResponseStatus;
 import com.databasesystems.realestate.models.response.SearchInquiryResponse;
@@ -56,6 +58,36 @@ public class BaseOperationsController {
 		}
 	}
 	
+	@PostMapping(value = "/realEstate/deleteHomeDetails", consumes = MediaType.APPLICATION_JSON_VALUE, 
+	        produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ResponseStatus> deleteHomeDetails(@RequestBody HomeEntity home) {
+		 
+		try {
+			boolean savedResp = commOpsServ.deleteHomeDetails(home);
+			if(savedResp) {
+				return new ResponseEntity<>(new ResponseStatus("Success",200,0),HttpStatus.OK);
+			}
+			throw new Exception("Error occured while creating agent");
+		}catch(Exception e) {
+			return new ResponseEntity<>(new ResponseStatus("Failure",500,0),HttpStatus.OK);
+		}
+	}
+	
+	@PostMapping(value = "/realEstate/saveHomeOwners", consumes = MediaType.APPLICATION_JSON_VALUE, 
+	        produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ResponseStatus> saveorUpdateHomeOwners(@RequestBody HomeOwnerEntity homeOwner) {
+		 
+		try {
+			HomeOwnerEntity savedResp = commOpsServ.saveorUpdateHomeOwners(homeOwner);
+			if(savedResp.getId() != 0 ) {
+				return new ResponseEntity<>(new ResponseStatus("Success",200,savedResp.getId()),HttpStatus.OK);
+			}
+			throw new Exception("Error occured while creating agent");
+		}catch(Exception e) {
+			return new ResponseEntity<>(new ResponseStatus("Failure",500,0),HttpStatus.OK);
+		}
+	}
+	
 	@PostMapping(value = "/realEstate/searchRequest", consumes = MediaType.APPLICATION_JSON_VALUE, 
 	        produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ResponseStatus> search(@RequestBody SearchRequest request) {
@@ -63,6 +95,17 @@ public class BaseOperationsController {
 		try {
 			List<SearchInquiryResponse> obj = commOpsServ.searchInquiry(request);
 			return new ResponseEntity<>(new ResponseStatus("Success",200,0,obj),HttpStatus.OK);
+			
+		}catch(Exception e) {
+			return new ResponseEntity<>(new ResponseStatus("Failure",500,0),HttpStatus.OK);
+		}
+	}
+	
+	@GetMapping(value = "/realEstate/fetchHomeDetails")
+	public ResponseEntity<ResponseStatus> fetchHomeDetailsbyId(@RequestParam(name = "homeId") int homeId) {
+		try {
+			HomeEntity homeresp = commOpsServ.fetchHomeDetails(homeId);
+			return new ResponseEntity<>(new ResponseStatus("Success",200,0,homeresp),HttpStatus.OK);
 			
 		}catch(Exception e) {
 			return new ResponseEntity<>(new ResponseStatus("Failure",500,0),HttpStatus.OK);

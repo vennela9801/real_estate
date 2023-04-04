@@ -33,13 +33,6 @@ CREATE TABLE `address` (
 
 
 
-Select home.HomeID, ho.OwnerFName, ho.OwnerLName,home.FloorSpace, home.Floors, home.Bathrooms, home.LandSize, home.YearConstructed, home.HomeType,
- address.AddressID, address.address, address.city, address.county, address.zip, home.rate
-From home, address , homeowners ho
-Where home.AddressID = address.AddressID and  
-ho.OwnerName = 'Asem Jhon' and 
-city.CityName = 'Sterling Heights');
-
 
 CREATE TABLE `databaseProject1`.`hometype` (
   `HomeTypeID` int NOT NULL AUTO_INCREMENT,
@@ -76,3 +69,70 @@ CREATE TABLE `databaseProject1`.`agent` (
   UNIQUE KEY `AgentID_UNIQUE` (`AgentID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+
+
+CREATE TABLE `homeowners` (
+  `OwnerID` int NOT NULL auto_increment,
+  `OwnerFName` varchar(45) NOT NULL,
+  `OwnerLName` varchar(45) DEFAULT NULL,
+  `dob` varchar(45) DEFAULT NULL,
+  `SSN` varchar(45) DEFAULT NULL,
+  `Profession` varchar(45) DEFAULT NULL,
+  `contact` varchar(45) DEFAULT NULL,
+  `email` varchar(45) DEFAULT NULL,
+  `Address_id` int not null,
+  PRIMARY KEY (`OwnerID`),
+  UNIQUE KEY `SSN_UNIQUE` (`SSN`),
+  KEY `AddressID_idx` (`Address_id`),
+  CONSTRAINT `Address_id_1` FOREIGN KEY (`Address_id`) REFERENCES `address` (`Address_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+CREATE TABLE `listing` (
+  `ListingID` int NOT NULL auto_increment,
+  `Status` varchar(45) DEFAULT NULL,
+  `CommissionRate` decimal(4,2) DEFAULT NULL,
+  `ListingDate` datetime DEFAULT NULL,
+  `HomeID` int NOT NULL,
+  `AgentID` int NOT NULL,
+  `OwnerID` int NOT NULL,
+  `price` decimal(14,5) NOT NULL,
+  PRIMARY KEY (`ListingID`),
+  UNIQUE KEY `ListingID_UNIQUE` (`ListingID`),
+  KEY `SSN_idx` (`OwnerID`),
+  KEY `HID_idx` (`HomeID`),
+  KEY `AgentID_idx` (`AgentID`),
+  CONSTRAINT `AgentID_1` FOREIGN KEY (`AgentID`) REFERENCES `agent` (`AgentID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `HID` FOREIGN KEY (`HomeID`) REFERENCES `home` (`HomeID`),
+  CONSTRAINT `SSN` FOREIGN KEY (`OwnerID`) REFERENCES `homeowners` (`OwnerID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+CREATE TABLE `appliances` (
+  `ModelNumber` int NOT NULL auto_increment,
+  `ApplianceName` varchar(255) NOT NULL,
+  `MakeYear` year DEFAULT NULL,
+  `Maker` varchar(45) DEFAULT NULL,
+  `Price` decimal(14,5) DEFAULT NULL,
+  `HomeID` int DEFAULT NULL,
+  PRIMARY KEY (`ModelNumber`),
+  KEY `HomeID_idx` (`HomeID`),
+  CONSTRAINT `HomeID` FOREIGN KEY (`HomeID`) REFERENCES `home` (`HomeID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+
+-- Mock DATABASE
+INSERT INTO `appliances`(ApplianceName, MakeYear, Maker, Price, HomeID) Values ( 'Water Filter', '2014', 'Absopure',100, 3);
+INSERT INTO `appliances`(ApplianceName, MakeYear, Maker, Price, HomeID) Values ( 'Water Filter', '2014', 'Absopure',100, 4);
+INSERT INTO `appliances`(ApplianceName, MakeYear, Maker, Price, HomeID) Values ( 'Water Filter', '2014', 'Absopure',100, 5);
+INSERT INTO `appliances`(ApplianceName, MakeYear, Maker, Price, HomeID) Values ( 'Television', '2019', 'Samsung',2000, 2);
+INSERT INTO `appliances`(ApplianceName, MakeYear, Maker, Price, HomeID) Values ( 'Television', '2019', 'Samsung',2000, 5);
+
+INSERT INTO `listing` Values ( 111, 'Sold',4.5, '2023-03-23', 2,2,1,450000.999) ;
+INSERT INTO `listing` Values ( 112, 'Sold',4.5, '2023-03-23', 2,2,1,480000.999) ;
+INSERT INTO `listing` Values ( 113, 'Sold',4.5, '2023-03-23', 3,3,2,536100.999) ;
+INSERT INTO `listing` Values ( 114, 'Available',3.5, '2023-03-23', 3,3,2,700000.999) ;
+INSERT INTO `listing` Values ( 115, 'Available',4.5, '2023-03-23', 4,3,3,800000.999) ;
+INSERT INTO `listing` Values ( 116, 'Available',5.5, '2023-03-23', 1,2,1,640000.999) ;
+INSERT INTO `listing` Values ( 117, 'Available',5.5, '2023-03-23', 6,2,1,720000.00) ;

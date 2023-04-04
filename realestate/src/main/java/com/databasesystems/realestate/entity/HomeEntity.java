@@ -60,7 +60,7 @@ public class HomeEntity implements Serializable{
 	private String description;
 	
 	@Column(name = "availabilitystatus")
-	private String availabilitystatus;
+	private String availabilityStatus;
 	
 	@Column(name = "AgentID")
 	private int agentId;
@@ -160,12 +160,12 @@ public class HomeEntity implements Serializable{
 		this.description = description;
 	}
 
-	public String getAvailabilitystatus() {
-		return availabilitystatus;
+	public String getAvailabilityStatus() {
+		return availabilityStatus;
 	}
 
-	public void setAvailabilitystatus(String availabilitystatus) {
-		this.availabilitystatus = availabilitystatus;
+	public void setAvailabilityStatus(String availabilityStatus) {
+		this.availabilityStatus = availabilityStatus;
 	}
 
 	public int getAgentId() {

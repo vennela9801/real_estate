@@ -16,6 +16,13 @@ public class SearchRequest {
 	private String availabilityStatus;
 	private String areaCovered;
 	private String builtYear;
+	private String agentID;
+	public String getAgentID() {
+		return agentID;
+	}
+	public void setAgentID(String agentID) {
+		this.agentID = agentID;
+	}
 	public String getHouseOwner() {
 		return houseOwner;
 	}

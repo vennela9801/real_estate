@@ -19,10 +19,20 @@ public class SearchInquiryResponse {
 	private String county;
 	private String floors;
 	private String bathrooms;
+	private String bedrooms;
 	private String landSize;
 	private String yearConstructed;
 	private String price;
 	private String floorSpace;
+	private String status;
+	private String ownerFirstName;
+	private String ownerLastName;
+	private String applianceName;
+	private String makeYear;
+	private String agentFirstName;
+	private String agentLastName;
+	private String totalCommission;
+	
 	public String getHouseOwner() {
 		return houseOwner;
 	}
@@ -106,6 +116,60 @@ public class SearchInquiryResponse {
 	}
 	public void setFloorSpace(String floorSpace) {
 		this.floorSpace = floorSpace;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	public String getOwnerFirstName() {
+		return ownerFirstName;
+	}
+	public void setOwnerFirstName(String ownerFirstName) {
+		this.ownerFirstName = ownerFirstName;
+	}
+	public String getOwnerLastName() {
+		return ownerLastName;
+	}
+	public void setOwnerLastName(String ownerLastName) {
+		this.ownerLastName = ownerLastName;
+	}
+	public String getApplianceName() {
+		return applianceName;
+	}
+	public void setApplianceName(String applianceName) {
+		this.applianceName = applianceName;
+	}
+	public String getMakeYear() {
+		return makeYear;
+	}
+	public void setMakeYear(String makeYear) {
+		this.makeYear = makeYear;
+	}
+	public String getAgentFirstName() {
+		return agentFirstName;
+	}
+	public void setAgentFirstName(String agentFirstName) {
+		this.agentFirstName = agentFirstName;
+	}
+	public String getAgentLastName() {
+		return agentLastName;
+	}
+	public void setAgentLastName(String agentLastName) {
+		this.agentLastName = agentLastName;
+	}
+	public String getTotalCommission() {
+		return totalCommission;
+	}
+	public void setTotalCommission(String totalCommission) {
+		this.totalCommission = totalCommission;
+	}
+	public String getBedrooms() {
+		return bedrooms;
+	}
+	public void setBedrooms(String bedrooms) {
+		this.bedrooms = bedrooms;
 	}
 	
 	
