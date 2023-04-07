@@ -112,5 +112,16 @@ public class BaseOperationsController {
 		}
 	}
 	
+	@GetMapping(value = "/realEstate/fetchHomeOwnerDetails")
+	public ResponseEntity<ResponseStatus> fetchHomeOwnerDetailsbyId(@RequestParam(name = "ownerId") int ownerId) {
+		try {
+			HomeOwnerEntity homeresp = commOpsServ.fetchHomeOwnerDetails(ownerId);
+			return new ResponseEntity<>(new ResponseStatus("Success",200,0,homeresp),HttpStatus.OK);
+			
+		}catch(Exception e) {
+			return new ResponseEntity<>(new ResponseStatus("Failure",500,0),HttpStatus.OK);
+		}
+	}
+	
 }
 

@@ -21,4 +21,6 @@ public interface CommnOperationsService {
 	public HomeOwnerEntity saveorUpdateHomeOwners(HomeOwnerEntity homeOwner) throws Exception;
 
 	public boolean deleteHomeDetails(HomeEntity home) throws Exception;
+
+	public HomeOwnerEntity fetchHomeOwnerDetails(int ownerId) throws Exception;
 }

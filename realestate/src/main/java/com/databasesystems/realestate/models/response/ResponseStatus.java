@@ -3,6 +3,7 @@ package com.databasesystems.realestate.models.response;
 import java.util.List;
 
 import com.databasesystems.realestate.entity.HomeEntity;
+import com.databasesystems.realestate.entity.HomeOwnerEntity;
 
 import lombok.Data;
 
@@ -14,6 +15,7 @@ public class ResponseStatus {
 	public int id;
 	public List<SearchInquiryResponse> obj;
 	public HomeEntity homeDetails;
+	public HomeOwnerEntity homeOwnerDetails;
 	
 	public ResponseStatus(String message, int statusCode, int id) {
 		super();
@@ -36,6 +38,14 @@ public class ResponseStatus {
 		this.statusCode = statusCode;
 		this.id = id;
 		this.homeDetails = homeDetails;
+	}
+	
+	public ResponseStatus(String message, int statusCode, int id, HomeOwnerEntity homeOwnerDetails) {
+		super();
+		this.message = message;
+		this.statusCode = statusCode;
+		this.id = id;
+		this.homeOwnerDetails = homeOwnerDetails;
 	}
 
 }
